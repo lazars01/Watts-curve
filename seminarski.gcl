@@ -1,0 +1,99 @@
+number h 100
+number w 200
+
+dim w h
+background 255 120 120
+
+linethickness 0.7
+
+number a 30
+number b 42.6
+number c 30
+
+expression x1 {(w - 2*a) / 2}
+expression x2 {x1 + 2*a}
+expression y {h / 2}
+
+point O1 x1 y
+cmark_lt O1
+
+point O2 x2 y
+cmark_lt O2
+
+expression tmp1 {x1 - b}
+expression tmp2 {x2 + b}
+
+point A tmp1 y
+point B tmp2 y
+
+circle k1 O1 A
+circle k2 O2 B
+
+color 0 0 255
+
+drawdashcircle k1
+drawdashcircle k2
+
+
+point UgaoPt 0 0 720 0
+getx ugao UgaoPt
+
+rotate A O1 ugao A
+
+cmark_lt A
+
+getx A_x A
+gety A_y A
+
+expression Ar_x {A_x + 2*c}
+expression Ar_y {A_y}
+
+point Ar Ar_x Ar_y
+
+circle k3 A Ar
+
+distance dist A O2
+
+if_then_else {dist <= b + 2*c}
+{
+
+  color 255 0 0
+  intersec2 B1 B2 k3 k2
+
+  if_then_else {ugao <=       360}
+ {
+    drawsegment A B2
+    getx b_x B2
+    gety b_y B2
+    midpoint M A B2
+    drawsegment O2 B2
+  }
+  {
+    drawsegment A B1
+    getx b_x B1
+    gety b_y B1
+    midpoint M A B1
+    drawsegment O2 B1
+  }
+  point B b_x b_y
+  cmark_lt B
+  drawsegment O1 A
+
+  cmark_lt M
+  linethickness 1
+  trace M 0 0 0
+}
+{
+}
+
+animation_frames 300 30
+
+
+
+
+
+
+
+
+
+
